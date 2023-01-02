@@ -1,8 +1,5 @@
 const MProduit= require("../models/Product/Product")
-const MLot = require("../models/Product/Lot")
-const MCategorie = require("../models/Product/Lot")
-const MPricing = require("../models/Product/Lot")
-MProduit.Create
+
 
 
 

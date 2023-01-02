@@ -9,7 +9,7 @@ const Create = (pack)=>{
 }
 
 const read = async (callback) =>{
-    let q= `select from Categorie `
+    let q= `select * from Categorie `
     await db.query(q,(err,Result)=>{
         callback(err,Result)
     })
@@ -34,7 +34,7 @@ const read_filter=(pack,callback)=>{
         q1+=` and idCategorie = ${pack.idCategorie} `
     }
 
-    let q= `select from Categorie where 1=1 `+q1
+    let q= `select * from Categorie where 1=1 `+q1
     db.query(q,(err,Result)=>{
         callback(err,Result)
     })
