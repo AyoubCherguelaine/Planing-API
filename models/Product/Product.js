@@ -1,61 +1,79 @@
 const db= require("../db")
 
 
-const Create = (pack,callback)=>{
+const Create = async (pack,callback)=>{
     let q= `INSERT INTO Produit ( titre, marque, idCategorie)
     VALUES (
         '${pack.titre}',
         '${pack.marque}',
         ${pack.idCategorie}
       );`
-      db.query(q,(err,Result)=>{
+      await db.query(q,(err,Result)=>{
         callback(err,Result)
       })
 }
 
-const read = (pack,callback)=>{
-    let q = `select  * from ProductDetail where idProduit=${pack.idProduit}`
-    db.query(q,(err,Result)=>{
-        callback(err,Result)
-    })
-}
 
-const update = (pack,callback)=>{
+
+const update = async (pack,callback)=>{
     // you can change only titre
 
     let q=`update Produit set titre="${pack.titre}" where idProduit=${pack.idProduit}`
-    db.query(q,(err,Result)=>{
+    await db.query(q,(err,Result)=>{
         callback(err,Result)
     })
 }
 
-const ProductDeatil=(callback)=>{
+const ProductDeatil= async(callback)=>{
     let q = `select  * from ProductDetail`
-    db.query(q,(err,Result)=>{
+    await db.query(q,(err,Result)=>{
         callback(err,Result)
     })
 
 }
 
-const ProductSearchTitre = (pack,callback)=>{
-    let q =`select  * from ProductDetail where nom like "${pack.titre}" `
-    db.query(q,(err,Result)=>{
-        callback(err,Result)
-    })
-}
 
-const ProductSearchMarque = (pack,callback)=>{
-    let q =`select  * from ProductDetail where marque like "${pack.marque}" `
-    db.query(q,(err,Result)=>{
-        callback(err,Result)
+
+const read_filter= async (pack,callback)=>{
+    let q1=""
+
+    if (pack.hasOwnProperty("idProduit")) {
+        q1 += ` and pd.idProduit=${pack.idProduit}`
+    }
+    if (pack.hasOwnProperty("titre")) {
+        q1 += ` and pd.titre like "%${pack.titre}%"`
+    }
+    if (pack.hasOwnProperty("marque")) {
+        q1 += ` and pd.marque like "%${pack.marque}%"`
+    }
+
+    if (pack.hasOwnProperty("Categorie")) {
+        q1 += ` and pd.categorie like "%${pack.Categorie}%"`
+    }
+
+    if (pack.hasOwnProperty("idCategorie")) {
+        q1 += ` and pd.idCategorie=${pack.idCategorie}`
+    }
+
+    if (pack.hasOwnProperty("prixS")) {
+        q1 += ` and pd.prix>${pack.prixS}`
+    }
+    if (pack.hasOwnProperty("prixI")) {
+        q1 += ` and pd.prix<${pack.prixI}`
+    }
+
+    let q = `select  * from ProductDetail pd where 1=1 `+q1
+    console.log(q)
+    await db.query(q, (err,result)=>{
+        callback(err,result)
     })
 }
 
 module.exports={
     Create,
-    read,
     update,
     ProductDeatil,
-    Search:{ProductSearchMarque, ProductSearchTitre}
+    read_filter
+   
    
 }

@@ -8,9 +8,9 @@ const Create = (pack)=>{
     })
 }
 
-const read = (pack,callback)=>{
-    let q= `select from Categorie where idCategorie=${pack.idCategorie}`
-    db.query(q,(err,Result)=>{
+const read = async (callback) =>{
+    let q= `select from Categorie `
+    await db.query(q,(err,Result)=>{
         callback(err,Result)
     })
 }
@@ -24,8 +24,26 @@ const update = (pack,callback)=>{
     })
 }
 
+const read_filter=(pack,callback)=>{
+
+    let q1=''
+    if(pack.hasOwnProperty("titre")){
+        q1+=` and titre like "%${pack.titre}%"`
+    }
+    if(pack.hasOwnProperty("idCategorie")){
+        q1+=` and idCategorie = ${pack.idCategorie} `
+    }
+
+    let q= `select from Categorie where 1=1 `+q1
+    db.query(q,(err,Result)=>{
+        callback(err,Result)
+    })
+
+}
+
 module.exports={
     Create,
     read,
-    update
+    update,
+    read_filter
 }

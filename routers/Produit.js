@@ -1,24 +1,14 @@
 const express = require('express');
-const CProduit = require("../controllers/Produit")
+const Produit = require("../controllers/Produit")
 const router = express.Router();
+const LotRouter = require("./Lot")
+const CatRouter = require("./Categorie")
+router.get("/",Produit.getProduits)
 
-router.get("/",async (req,res)=>{
-    await CProduit.Product.ProductDeatil((err,result)=>{
-        
-    })
-})
 
-router.get("/:idProduit", async (req,res)=>{
-    let id = req.params.idProduit
-})
+router.get("/idProduit=:idProduit/titre=:titre/marque=:marque/Categorie=:Categorie/idCategorie=:idCategorie/prixS=:prixS/prixI=:prixI/",Produit.getProduitsFilter)
 
-router.get("/:titre", async (req,res)=>{
-    let titre = req.params.titre
-})
-
-router.get("/:Marque", async (req,res)=>{
-    let Marque = req.params.Marque
-
-})
+router.use('/Lot',LotRouter)
+router.use("/Categorie",CatRouter)
 
 module.exports= router

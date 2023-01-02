@@ -1,6 +1,6 @@
- const bodyParser = require('body-parser');
+
 const express = require('express');
- 
+const RProduit= require("./routers/Produit")
 app = express()
 
 app.set('view engine', 'ejs');
@@ -16,7 +16,10 @@ app.post('/', (req, res) => {
 
 });
 
+app.use("/Produit",RProduit)
+
 app.listen(3000, () => {
     console.log(`Server started on port`);
 
 });
+
