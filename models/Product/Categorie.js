@@ -1,6 +1,17 @@
 const db= require("../db")
 
-const Create = (pack)=>{
+
+class Categorie{
+    constructor(titre){
+        this.titre=titre
+    }
+
+    static save(obj,callback){
+        Create(obj,callback)
+    }
+}
+
+const Create = (pack,callback)=>{
     let q= `INSERT INTO Categorie ( titre)
     VALUES ( '${pack.titre}');`
     db.query(q,(err,Result)=>{
@@ -42,6 +53,7 @@ const read_filter=(pack,callback)=>{
 }
 
 module.exports={
+    Categorie,
     Create,
     read,
     update,

@@ -1,6 +1,23 @@
 const db = require("../db")
 
 
+class Lot{
+
+  constructor(titreLot,PrixAchat,dateAchat,Quantity,inStock,idProduit){
+    this.titreLot = titreLot;
+    this.PrixAchat = PrixAchat;
+    this.dateAchat = dateAchat;
+    this.Quantity = Quantity;
+    this.inStock = inStock;
+    this.idProduit = idProduit;
+  }
+
+  static save(obj,callback) {
+    Create(obj,callback);
+  }
+
+}
+
 const Create = (pack, callback) => {
 
   if (pack.hasOwnProperty("titreLot") && pack.hasOwnProperty("PrixAchat") && pack.hasOwnProperty("dateAchat") && pack.hasOwnProperty("Quantity") && pack.hasOwnProperty("inStock") && pack.hasOwnProperty("idProduit")) {
@@ -90,6 +107,7 @@ const updateInStock = (pack, callback) => {
 }
 
 module.exports = {
+  Lot,
   Create,
   read,
   updatePrix,

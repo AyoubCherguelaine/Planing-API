@@ -1,4 +1,4 @@
-const Pricing = require("../models/Product/Pricing");
+const MPricing = require("../models/Product/Pricing");
 
 const Filter_Pricing = (idPricing,idProduit,titre,marque,idCategorie,PrixS,PrixI,DatePricing)=>{
     filter={}
@@ -33,7 +33,7 @@ const Filter_Pricing = (idPricing,idProduit,titre,marque,idCategorie,PrixS,PrixI
 
 const getPricing= async (req,res)=>{
 
-    await Pricing.read((err,result)=>{
+    await MPricing.read((err,result)=>{
         if(err){
             res.send({message:"Error",Error:err})
         }else{
@@ -53,9 +53,9 @@ const getPricingFilter = async (req,res)=>{
     let PrixI = params.PrixI
     let DatePricing = params.DatePricing
 
-    pack = Filter_Pricing(idPricing,idPricing,titre,marque,idCategorie,PrixS,PrixI,DatePricing)
+    pack = Filter_Pricing(idPricing,idProduit,titre,marque,idCategorie,PrixS,PrixI,DatePricing)
 
-    await Pricing.read_filter(pack,(err,result)=>{
+    await MPricing.read_filter(pack,(err,result)=>{
         if(err){
             res.send({message:"Error",Error:err})
             }else{
@@ -64,7 +64,20 @@ const getPricingFilter = async (req,res)=>{
     })
 }
 
+
+const postCreatePricing = async (req,res)=>{
+    let Pricing = new MPricing.Pricing(req.body.Prix,req.body.DatePricing,req.body.idProduit)
+    MPricing.Pricing.save(Pricing,(err,result)=>{
+        if(err){
+            res.send({message:"Error",Error:err})
+        }else{
+            res.send(result);
+        }
+    })
+}
+
 module.exports={
+    postCreatePricing,
     getPricing,
     getPricingFilter
 }

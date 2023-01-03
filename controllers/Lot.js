@@ -44,7 +44,28 @@ const getLotFilter = async (req,res)=>{
         })
 }
 
+const postCreateLot = async (req, res) => {
+
+    let idProduit = req.body.idProduit
+ 
+    let titreLot = req.body.titreLot
+    let PrixAchat = req.body.PrixAchat
+    let dateAchat   = req.body.dateAchat
+    let inStock = req.body.Quantity
+    this.Quantity = Quantity;
+
+    let Lot =new MLot.Lot(titreLot,PrixAchat, dateAchat,Quantity,inStock,idProduit)
+    MLot.Lot.save(Lot,(err,result) => {
+        if(err){
+            res.send({message:"Error",Error:err})
+        }else{
+            res.send(result);
+        }
+    })
+}
+
 module.exports = {
+    postCreateLot,
     getLot,
     getLotFilter
 

@@ -1,7 +1,26 @@
 const db= require("../db")
 
-const Create = (pack)=>{
-    let q= `call InsertPricing(19000,"2020-12-28",1);`
+class Pricing{
+
+    constructor(Prix,DatePricing,idProduit){
+        this.Prix=Prix
+        this.DatePricing=DatePricing
+        this.idProduit=idProduit
+    }
+
+    static save(obj,callback){
+        Create(obj,(err,result)=>{
+            callback(err,result)
+        })
+    }
+
+}
+
+const Create = (pack,callback)=>{
+    let q= `call InsertPricing(${pack.Prix},"${pack.DatePricing}",${pack.idProduit});`
+    db.query(q,(err,Result)=>{
+        callback(err,Result)
+    })
 }
 
 const read = (callback)=>{
@@ -57,6 +76,7 @@ const read_filter= (pack,callback)=>{
 
 
 module.exports={
+    Pricing,
     Create,
     read,
     read_filter

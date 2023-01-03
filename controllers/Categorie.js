@@ -1,5 +1,5 @@
 const { fileLoader } = require("ejs");
-const Cat = require("../models/Product/Category")
+const Cat = require("../models/Product/Categorie")
 
 
 const FilterCategorie = (idCategorie,titre)=>{
@@ -43,8 +43,22 @@ const getCategorieFilter= async (req,res)=>{
 
 }
 
+const postCreateCategorie = (req, res) => { 
+
+    let Categorie = new Cat.Categorie(req.body.titre)
+
+    Cat.Categorie.save(Categorie,(err,result) => {
+        if(err){
+            res.send({message:"Error",Error:err})
+        }else{
+            res.send(result);
+        }
+    });
+
+}
 
 module.exports = {
+    postCreateCategorie,
     getCategorie,
     getCategorieFilter
 }

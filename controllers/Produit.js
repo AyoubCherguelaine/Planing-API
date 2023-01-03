@@ -63,9 +63,21 @@ const getProduitsFilter = async (req,res)=>{
     })
 }
 
+
+const postCreateProduit = (req, res) =>{
+    let Product = new MProduit.Produit(req.body.titre, req.body.marque, req.body.idCategorie)
+    MProduit.Produit.save(Product,(err, result) =>{
+        if(err){
+            res.send({message:"Error",Error:err})
+        }else{
+            res.send(result);
+        }
+    })
+}
 module.exports ={
         getProduits,
-        getProduitsFilter
+        getProduitsFilter,
+        postCreateProduit
     
     
 }

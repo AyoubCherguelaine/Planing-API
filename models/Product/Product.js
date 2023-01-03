@@ -1,6 +1,23 @@
 const db= require("../db")
 
 
+class Produit{
+
+    constructor(titre,marque,idCategorie){
+            this.idProduit=0
+            this.titre=titre
+            this.marque=marque
+            this.idCategorie=idCategorie
+    }
+
+    static save(obj,callback){
+        Create(obj,(err,result){
+            callback(err,result)
+        })
+    }
+
+}
+
 const Create = async (pack,callback)=>{
     let q= `INSERT INTO Produit ( titre, marque, idCategorie)
     VALUES (
@@ -12,9 +29,6 @@ const Create = async (pack,callback)=>{
         callback(err,Result)
       })
 }
-
-
-
 const update = async (pack,callback)=>{
     // you can change only titre
 
@@ -31,9 +45,6 @@ const ProductDeatil= async(callback)=>{
     })
 
 }
-
-
-
 const read_filter= async (pack,callback)=>{
     let q1=""
 
@@ -70,6 +81,7 @@ const read_filter= async (pack,callback)=>{
 }
 
 module.exports={
+    Produit,
     Create,
     update,
     ProductDeatil,
