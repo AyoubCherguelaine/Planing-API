@@ -11,7 +11,7 @@ class Produit{
     }
 
     static save(obj,callback){
-        Create(obj,(err,result){
+        Create(obj,(err,result)=>{
             callback(err,result)
         })
     }

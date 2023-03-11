@@ -34,7 +34,7 @@ const Filter_Produit = (idProduit,titre,marque,Categorie,idCategorie,prixS,prixI
 
 
 const getProduits= async (req,res)=>{
-    await MProduit.read_filter((err,result)=>{
+    await MProduit.read_filter({},(err,result)=>{
         if(err){
             res.send({message:"Error",Error:err})
         }else{

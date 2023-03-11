@@ -1,2 +1,1 @@
-
-show TABLES;
+select  * from ProductDetail pd where 1=1
